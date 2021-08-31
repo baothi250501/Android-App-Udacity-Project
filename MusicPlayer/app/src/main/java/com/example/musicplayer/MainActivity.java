@@ -23,6 +23,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mp.start();
+                mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        releaseMediaPlayer();
+                    }
+                });
             }
         });
         pauseButton.setOnClickListener(new View.OnClickListener() {
@@ -31,5 +37,21 @@ public class MainActivity extends AppCompatActivity {
                 mp.pause();
             }
         });
+    }
+    /**
+     * Clean up the media player by releasing its resources.
+     */
+    private void releaseMediaPlayer() {
+        // If the media player is not null, then it may be currently playing a sound.
+        if (mp != null) {
+            // Regardless of the current state of the media player, release its resources
+            // because we no longer need it.
+            mp.release();
+
+            // Set the media player back to null. For our code, we've decided that
+            // setting the media player to null is an easy way to tell that the media player
+            // is not configured to play an audio file at the moment.
+            mp = null;
+        }
     }
 }
