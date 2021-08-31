@@ -12,7 +12,19 @@ import java.util.ArrayList;
 
 public class ColorsActivity extends AppCompatActivity {
 
+    /** Handles playback of all the sound files */
     private MediaPlayer mMediaPlayer;
+
+    /**
+     * This listener get triggered when the {@link MediaPlayer} has complete
+     * playing the audio files
+     */
+    private MediaPlayer.OnCompletionListener mOnCompletionListener = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mp) {
+            releaseMediaPlayer();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +65,29 @@ public class ColorsActivity extends AppCompatActivity {
 
                 //Start the audio file
                 mMediaPlayer.start();
+
+                //Setup a listener on the media player, so that we can stop and release
+                //the media player once the sounds
+                mMediaPlayer.setOnCompletionListener(mOnCompletionListener);
             }
         });
 
+    }
+
+    /**
+     * Clean up the media player by releasing its resources.
+     */
+    private void releaseMediaPlayer() {
+        // If the media player is not null, then it may be currently playing a sound.
+        if (mMediaPlayer != null) {
+            // Regardless of the current state of the media player, release its resources
+            // because we no longer need it.
+            mMediaPlayer.release();
+
+            // Set the media player back to null. For our code, we've decided that
+            // setting the media player to null is an easy way to tell that the media player
+            // is not configured to play an audio file at the moment.
+            mMediaPlayer = null;
+        }
     }
 }
