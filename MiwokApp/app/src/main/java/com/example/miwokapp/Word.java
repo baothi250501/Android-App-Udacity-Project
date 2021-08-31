@@ -1,91 +1,82 @@
 package com.example.miwokapp;
 
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
+
+import java.util.ArrayList;
+
 /**
- * {@link Word} represents a vocabulary word that the user wants to learn.
- * It contains a default translation and a Miwok translation for that word.
+ * {@link WordAdapter} is an {@link ArrayAdapter} that can provide the layout for each list item
+ * based on a data source, which is a list of {@link Word} objects.
  */
-public class Word {
-
-    /** Default translation for the word */
-    private String mDefaultTranslation;
-
-    /** Miwok translation for the word */
-    private String mMiwokTranslation;
-
-    /** Image resource id of the word*/
-    private int mImageResourceId = NO_IMAGE_PROVIDED;
-
-    /** Audio resource id of the word*/
-    private int mAudioResourceId;
-
-    private static final int NO_IMAGE_PROVIDED = -1;
+public class WordAdapter extends ArrayAdapter<Word> {
 
     /**
-     * Create a new Word object.
+     * Resource ID for the background color for this list of words
+     */
+    private int mColorResourceId;
+
+    /**
+     * Create a new {@link WordAdapter} object.
      *
-     * @param defaultTranslation is the word in a language that the user is already familiar with
-     *                           (such as English)
-     * @param miwokTranslation is the word in the Miwok language
-     *
-     * @param audioResourceId is the audio resource id of the word
+     * @param context is the current context (i.e. Activity) that the adapter is being created in.
+     * @param words is the list of {@link Word}s to be displayed.
      */
-    public Word(String defaultTranslation, String miwokTranslation, int audioResourceId){
-        mDefaultTranslation = defaultTranslation;
-        mMiwokTranslation = miwokTranslation;
-        mAudioResourceId = audioResourceId;
+    public WordAdapter(Context context, ArrayList<Word> words, int colorResourceId) {
+        super(context,0,words);
+        mColorResourceId = colorResourceId;
     }
 
-    /**
-     * Create a new Word object.
-     *
-     * @param defaultTranslation is the word in a language that the user is already familiar with
-     *                           (such as English)
-     * @param miwokTranslation is the word in the Miwok language
-     *
-     * @param imageResourceId is the image of the word
-     *
-     * @param audioResourceId is the audio resource id of the word
-     */
-    public Word(String defaultTranslation, String miwokTranslation, int imageResourceId, int audioResourceId){
-        mDefaultTranslation = defaultTranslation;
-        mMiwokTranslation = miwokTranslation;
-        mImageResourceId = imageResourceId;
-        mAudioResourceId = audioResourceId;
-    }
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        // Check if an existing view is being reused, otherwise inflate the view
+        View listItemView = convertView;
+        if (listItemView == null){
+            listItemView = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
+        }
 
-    /**
-     * Get the default translation of the word
-     */
-    public String getDefaultTranslation(){
-        return mDefaultTranslation;
-    }
+        // Get the {@link Word} object located at this position in the list
+        Word currentWord = getItem(position);
 
-    /**
-     * Get the miwok translation of the word
-     */
-    public String getMiwokTranslation(){
-        return mMiwokTranslation;
-    }
+        // Find the TextView in the list_item.xml layout with the ID miwok_text_view.
+        TextView miwokTextView = (TextView) listItemView.findViewById(R.id.miwok_text_view);
+        // Get the Miwok translation from the currentWord object and set this text on the Miwok TextView.
+        miwokTextView.setText(currentWord.getMiwokTranslation());
 
-    /**
-     * Get the image resource id of the word
-     */
-    public int getImageResourceId(){
-        return mImageResourceId;
-    }
+        // Find the TextView in the list_item.xml layout with the ID default_text_view.
+        TextView defaultTextView = listItemView.findViewById(R.id.default_text_view);
+        // Get the default translation from the currentWord object and set this text on the default TextView.
+        defaultTextView.setText(currentWord.getDefaultTranslation());
 
-    /**
-     * Get the audio resource id of the word
-     */
-    public int getAudioResourceId(){
-        return mAudioResourceId;
-    }
+        // Find the ImageView in the list_item.xml layout with the ID image
+        ImageView imageView = (ImageView) listItemView.findViewById(R.id.image);
+        if (currentWord.hasImage()){
+            // Get the image resource ID from the current word object and
+            // set the image to iconView
+            imageView.setImageResource(currentWord.getImageResourceId());
+            // Make sure the view is visible
+            imageView.setVisibility(View.VISIBLE);
+        }
+        else{
+            // Otherwise hide the ImageView (set visibility to GONE)
+            imageView.setVisibility(View.GONE);
+        }
 
-    /**
-     * Returns whether or not there is an image for
-     * @return
-     */
-    public boolean hasImage(){
-        return mImageResourceId != NO_IMAGE_PROVIDED;
+        // Set the theme color for the list item
+        View textContainer = listItemView.findViewById(R.id.text_container);
+        // Find the color that the resource ID maps to
+        int color = ContextCompat.getColor(getContext(), mColorResourceId);
+        // Set the background color of the text container View
+        textContainer.setBackgroundColor(color);
+
+        // Return the whole list item layout (containing 2 TextViews) so that it can be shown in the ListView.
+        return listItemView;
     }
 }
