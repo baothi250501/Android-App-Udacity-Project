@@ -6,7 +6,6 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.provider.UserDictionary;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -22,8 +21,9 @@ public class NumbersActivity extends AppCompatActivity {
     /** Handles audio focus when playing a sound file */
     private AudioManager mAudioManager;
 
-    AudioManager.OnAudioFocusChangeListener mOnAudioFocusChangeListener =
+    private AudioManager.OnAudioFocusChangeListener mOnAudioFocusChangeListener =
             new AudioManager.OnAudioFocusChangeListener() {
+                @Override
                 public void onAudioFocusChange(int focusChange) {
                     if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
                         // The AUDIOFOCUS_LOSS case means we've lost audio focus and
