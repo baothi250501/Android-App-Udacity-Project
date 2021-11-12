@@ -1,11 +1,14 @@
 package com.example.earthquakereport;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public final class QueryUtils {
@@ -68,9 +71,13 @@ public final class QueryUtils {
                 String location = properties.getString("place");
                 //Extract “time” for time
                 String time = properties.getString("time");
+                long timeNum = Long.parseLong(time);
+                Date dateObject = new Date (timeNum);
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormatter = new SimpleDateFormat("MMM dd, yyyy");
+                String dateToDisplay = dateFormatter.format(dateObject);
 
                 //Create Earthquake java object from magnitude, location, and time
-                EarthquakeEvent earthquakeEvent = new EarthquakeEvent(magnitude, location, time);
+                EarthquakeEvent earthquakeEvent = new EarthquakeEvent(magnitude, location, dateToDisplay);
 
                 //Add earthquake to list of earthquakes
                 earthquakes.add(earthquakeEvent);
