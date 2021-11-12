@@ -4,7 +4,7 @@ public class EarthquakeEvent {
 
     private String mMagnitude;
     private String mLocation;
-    private String mDate;
+    private long mTimeMilliseconds;
 
     /*
      * Create a new EarthquakeEvent object
@@ -13,17 +13,17 @@ public class EarthquakeEvent {
      * @param mLocation is the location of earthquake event
      * @param mDate is the date of earthquake event
      * */
-    public EarthquakeEvent(String magnitude, String location, String date){
+    public EarthquakeEvent(String magnitude, String location, long timeMilliseconds){
         mMagnitude = magnitude;
         mLocation = location;
-        mDate = date;
+        mTimeMilliseconds = timeMilliseconds;
     }
 
     /**
-     * Get the date of earthquake event
+     * Get the time of earthquake event
      */
-    public String getmDate() {
-        return mDate;
+    public long getmTimeMilliseconds() {
+        return mTimeMilliseconds;
     }
 
     /**
