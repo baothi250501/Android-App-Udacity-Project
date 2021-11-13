@@ -60,8 +60,8 @@ public class EarthquakeAdapter extends ArrayAdapter<EarthquakeEvent> {
         GradientDrawable magnitudeCircle = (GradientDrawable) magnitudeView.getBackground();
         // Get the appropriate background color based on the current earthquake magnitude
         int magnitudeColor = getMagnitudeColor(currentEarthquake.getmMagnitude());
+
         // Set the color on the magnitude circle
-        Log.i("MyColor", Integer.toString(magnitudeColor));
         magnitudeCircle.setColor(magnitudeColor);
 
 
@@ -142,7 +142,8 @@ public class EarthquakeAdapter extends ArrayAdapter<EarthquakeEvent> {
             case 9:
                 magnitudeColorResourceID = R.color.magnitude9;
                 break;
-            default:magnitudeColorResourceID = R.color.magnitude10plus;
+            default:
+                magnitudeColorResourceID = R.color.magnitude10plus;
                 break;
         }
         return ContextCompat.getColor(getContext(), magnitudeColorResourceID);
