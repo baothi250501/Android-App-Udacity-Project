@@ -65,8 +65,8 @@ public final class QueryUtils {
                 //Get “properties” JSONObject
                 JSONObject properties = currentEarthquakeEvent.getJSONObject("properties");
 
-                //Extract “mag” for magnitude
-                String magnitude = properties.getString("mag");
+                // Extract the value for the key called "mag"
+                double magnitude = properties.getDouble("mag");
                 //Extract “place” for location
                 String location = properties.getString("place");
                 //Extract “time” for time

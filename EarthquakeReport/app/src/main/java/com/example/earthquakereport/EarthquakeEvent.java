@@ -2,7 +2,7 @@ package com.example.earthquakereport;
 
 public class EarthquakeEvent {
 
-    private String mMagnitude;
+    private double mMagnitude;
     private String mLocation;
     private long mTimeMilliseconds;
 
@@ -13,7 +13,7 @@ public class EarthquakeEvent {
      * @param mLocation is the location of earthquake event
      * @param mDate is the date of earthquake event
      * */
-    public EarthquakeEvent(String magnitude, String location, long timeMilliseconds){
+    public EarthquakeEvent(double magnitude, String location, long timeMilliseconds){
         mMagnitude = magnitude;
         mLocation = location;
         mTimeMilliseconds = timeMilliseconds;
@@ -36,7 +36,7 @@ public class EarthquakeEvent {
     /**
      * Get the magnitude of earthquake event
      */
-    public String getmMagnitude() {
+    public double getmMagnitude() {
         return mMagnitude;
     }
 }
