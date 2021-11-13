@@ -72,9 +72,11 @@ public final class QueryUtils {
                 //Extract “time” for time
                 String time = properties.getString("time");
                 long timeMilliseconds = Long.parseLong(time);
+                //Extract "url" for url
+                String url = properties.getString("url");
 
                 //Create Earthquake java object from magnitude, location, and time
-                EarthquakeEvent earthquakeEvent = new EarthquakeEvent(magnitude, location, timeMilliseconds);
+                EarthquakeEvent earthquakeEvent = new EarthquakeEvent(magnitude, location, timeMilliseconds, url);
 
                 //Add earthquake to list of earthquakes
                 earthquakes.add(earthquakeEvent);
