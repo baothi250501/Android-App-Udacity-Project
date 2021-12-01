@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     /** URL to query the USGS dataset for earthquake information */
     private static final String USGS_REQUEST_URL =
-            "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2012-01-01&endtime=2012-12-01&minmagnitude=6";
+            "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2021-01-01&endtime=2021-05-25&minmagnitude=6";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,8 +172,8 @@ public class MainActivity extends AppCompatActivity {
             try{
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
-                urlConnection.setReadTimeout(10000 /* milliseconds */);
-                urlConnection.setConnectTimeout(15000 /* milliseconds */);
+                urlConnection.setReadTimeout(1000 /* milliseconds */);
+                urlConnection.setConnectTimeout(1500 /* milliseconds */);
                 urlConnection.connect();
 
                 //If the request was successful response code 200),
